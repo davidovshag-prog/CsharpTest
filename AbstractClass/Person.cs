@@ -1,4 +1,6 @@
-﻿namespace AbstractClass;
+﻿using Bogus;
+
+namespace AbstractClass;
 
 public abstract class Person
 {
@@ -14,6 +16,17 @@ public abstract class Person
         _id = Guid.NewGuid().ToString();
         _name = "No name";
         _phone = "+38(000) 00 00 000";
+    }
+
+    protected Person(bool isRandom = false)
+    {
+        Faker faker = new Faker("uk");
+        if (isRandom)
+        {
+            _id = Guid.NewGuid().ToString();
+            _name = faker.Person.FullName;
+            _phone = faker.Person.Phone;
+        }
     }
 
     /// <summary>

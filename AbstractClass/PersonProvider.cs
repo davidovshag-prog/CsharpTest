@@ -19,11 +19,28 @@ public class PersonProvider
             Person p;
             var item = rnd.Next(0, 2);
             if (item == 0)
-                p = new Student();
+                p = new Student(true);
             else
-                p = new Teacher();
+                p = new Teacher(true);
             _persons.Add(p);
         }
+    }
+
+    /// <summary>
+    /// Записує усіх осіб у файл
+    /// </summary>
+    /// <param name="stream">Вказівник на потік</param>
+    public void WriteAllToFile(Stream stream)
+    {
+        
+    }
+    /// <summary>
+    /// Читання із файлу через потік
+    /// </summary>
+    /// <param name="stream">Вказівник на потік</param>
+    public void ReadAllFile(Stream stream)
+    {
+
     }
 
     public void ShowAll()

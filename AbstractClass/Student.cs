@@ -1,4 +1,6 @@
-﻿namespace AbstractClass;
+﻿using Bogus;
+
+namespace AbstractClass;
 
 public class Student : Person
 {
@@ -15,6 +17,13 @@ public class Student : Person
     {
         _entryDate = DateTime.Now;
         _group = "No group";
+    }
+
+    public Student(bool isRandom=false)
+        : base(isRandom)
+    {
+        Faker faker = new Faker("uk");
+        _group = "Group " + faker.Random.Int(1, 5);
     }
 
     public override void ViewInfo()
