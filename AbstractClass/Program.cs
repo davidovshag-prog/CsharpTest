@@ -22,20 +22,35 @@ else if (person is Teacher)
     person.ViewInfo();
 }
 */
-PersonProvider provider = new PersonProvider();
-provider.ListGeneration(5);
-Console.WriteLine("--------- Створено ---------");
-provider.ShowAll();
-// Запис у файл
-using (FileStream fs = new FileStream("people.txt", FileMode.Create))
+try
 {
-    provider.WriteAllToFile(fs);
+    PersonProvider provider = new PersonProvider();
+    provider.ListGeneration(5);
+
+    Console.WriteLine("--------- Створено ---------");
+    provider.ShowAll();
+
+    using (FileStream fs = new FileStream("people.txt", FileMode.Create))
+    {
+        provider.WriteAllToFile(fs);
+    }
+
+    using (FileStream fs = new FileStream("people.txt", FileMode.Open))
+    {
+        provider.ReadAllFile(fs);
+    }
+
+    Console.WriteLine("--------- Після зчитування ---------");
+    provider.ShowAll();
+
+    Console.WriteLine("--------- ToString тест ---------");
+    Person s = new Student(true);
+    Person t = new Teacher(true);
+    Console.WriteLine(s.ToString());
+    Console.WriteLine(t.ToString());
 }
-// Читання з файлу
-using (FileStream fs = new FileStream("people.txt", FileMode.Open))
+catch (Exception ex)
 {
-    provider.ReadAllFile(fs);
+    Console.WriteLine("Помилка: " + ex.Message);
 }
-Console.WriteLine("--------- Після зчитування ---------");
-provider.ShowAll();
 

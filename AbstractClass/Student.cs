@@ -35,5 +35,9 @@ public class Student : Person
         Console.WriteLine("Група: " + _group);
         Console.ForegroundColor = ConsoleColor.White;
     }
+    public override string ToString()
+    {
+        return $"Student: {_group}, дата вступу: {_entryDate:dd.MM.yyyy}";
+    }
 }
 

@@ -40,4 +40,8 @@ public class Teacher : Person
         Console.WriteLine($"Зарплата {_salary}");
         Console.ForegroundColor = ConsoleColor.White;
     }
+    public override string ToString()
+    {
+        return $"Teacher: {_subject}, {_position}, {_salary} грн.";
+    }
 }
