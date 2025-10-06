@@ -18,7 +18,7 @@ if (person is Student)
 }
 else if (person is Teacher)
     {
-    Console.WriteLine("----Teacher----");
+    Console.WriteLine("----Teacher-=---");
     person.ViewInfo();
 }
 */
