@@ -1,11 +1,11 @@
-﻿namespace AbstractClass;
+﻿using System.Text;
+
+namespace AbstractClass;
 
 public class PersonProvider
 {
-    /// <summary>
-    /// Можна проініціалізувати при створенні, або у конструкторі
-    /// </summary>
     private readonly List<Person> _persons;
+
     public PersonProvider()
     {
         _persons = new List<Person>();
@@ -27,20 +27,57 @@ public class PersonProvider
     }
 
     /// <summary>
-    /// Записує усіх осіб у файл
+    /// Записує усіх користувачів у файл (текстом)
     /// </summary>
-    /// <param name="stream">Вказівник на потік</param>
     public void WriteAllToFile(Stream stream)
     {
-        
+        using (StreamWriter writer = new StreamWriter(stream, Encoding.UTF8, leaveOpen: true))
+        {
+            foreach (Person p in _persons)
+            {
+                // Тип (Student або Teacher)
+                writer.WriteLine(p.GetType().Name);
+
+                // Виводимо усю інформацію у одну лінію
+                if (p is Student s)
+                {
+                    writer.WriteLine($"Student|{s.GetHashCode()}");
+                }
+                else if (p is Teacher t)
+                {
+                    writer.WriteLine($"Teacher|{t.GetHashCode()}");
+                }
+            }
+        }
+        Console.WriteLine(" Дані записані у файл (текстом).");
     }
+
     /// <summary>
-    /// Читання із файлу через потік
+    /// Читання із файлу через потік (текстом)
     /// </summary>
-    /// <param name="stream">Вказівник на потік</param>
     public void ReadAllFile(Stream stream)
     {
+        _persons.Clear();
 
+        using (StreamReader reader = new StreamReader(stream, Encoding.UTF8, leaveOpen: true))
+        {
+            while (!reader.EndOfStream)
+            {
+                string? type = reader.ReadLine();
+                string? data = reader.ReadLine();
+
+                if (type == "Student")
+                {
+                    _persons.Add(new Student(true));
+                }
+                else if (type == "Teacher")
+                {
+                    _persons.Add(new Teacher(true));
+                }
+            }
+        }
+
+        Console.WriteLine("Дані зчитані з файлу (текстом).");
     }
 
     public void ShowAll()
@@ -48,6 +85,7 @@ public class PersonProvider
         foreach (Person p in _persons)
         {
             p.ViewInfo();
+            Console.WriteLine("-------------------");
         }
     }
 }

@@ -23,7 +23,19 @@ else if (person is Teacher)
 }
 */
 PersonProvider provider = new PersonProvider();
-provider.ListGeneration(12);
-Console.WriteLine("---------Items View---------");
+provider.ListGeneration(5);
+Console.WriteLine("--------- Створено ---------");
+provider.ShowAll();
+// Запис у файл
+using (FileStream fs = new FileStream("people.txt", FileMode.Create))
+{
+    provider.WriteAllToFile(fs);
+}
+// Читання з файлу
+using (FileStream fs = new FileStream("people.txt", FileMode.Open))
+{
+    provider.ReadAllFile(fs);
+}
+Console.WriteLine("--------- Після зчитування ---------");
 provider.ShowAll();
 
